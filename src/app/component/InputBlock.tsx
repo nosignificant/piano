@@ -1,9 +1,8 @@
-import { MutableRefObject } from "react";
-
 type blockProps = {
   rowIndex: number;
   colIndex: number;
   setGrid: React.Dispatch<React.SetStateAction<string[][]>>;
+  asciiGrid: number[][];
   maxRow: number;
   maxCol: number;
   inputRefs: React.MutableRefObject<Array<Array<HTMLInputElement | null>>>;
@@ -13,6 +12,7 @@ export default function InputBlock({
   rowIndex,
   colIndex,
   setGrid,
+  asciiGrid,
   maxRow,
   maxCol,
   inputRefs,
@@ -55,6 +55,7 @@ export default function InputBlock({
       }
     }
   };
+
   const handleKeyDown = (
     e: React.KeyboardEvent<HTMLInputElement>,
     row: number,
@@ -63,20 +64,17 @@ export default function InputBlock({
     if (e.key === "Backspace") {
       let prevCol = col - 1;
       let prevRow = row;
-
-      if (prevRow >= maxCol) {
-        prevCol = 0;
+      console.log(prevCol);
+      if (prevCol === -1) {
+        prevCol = maxCol - 1;
         prevRow -= 1;
       }
-
-      if (prevRow < maxRow) {
-        inputRefs.current?.[prevRow]?.[prevCol]?.focus();
-      }
+      inputRefs.current?.[prevRow]?.[prevCol]?.focus();
     }
   };
 
   return (
-    <div className="w-[50px] h-[50px] border border-solid flex justify-center items-center">
+    <div className="w-[50px] h-[50px] bg-gray-200 flex justify-center items-center">
       <input
         ref={(el) => {
           inputRefs.current[rowIndex][colIndex] = el;
