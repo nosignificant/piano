@@ -1,4 +1,4 @@
-import { MutableRefObject, useEffect } from "react";
+import { MutableRefObject } from "react";
 
 type blockProps = {
   rowIndex: number;
@@ -6,7 +6,7 @@ type blockProps = {
   setGrid: React.Dispatch<React.SetStateAction<string[][]>>;
   maxRow: number;
   maxCol: number;
-  inputRefs: MutableRefObject<Array<Array<HTMLInputElement | null>>>;
+  inputRefs: React.MutableRefObject<Array<Array<HTMLInputElement | null>>>;
 };
 
 export default function InputBlock({
@@ -23,8 +23,16 @@ export default function InputBlock({
     col: number
   ) => {
     const value = e.target.value;
+    console.log(value);
+    if (value.length > 1) {
+      e.target.value = value[value.length - 1]; // 마지막 글자만 사용
+    }
 
-    if (value.length > 1) return;
+    setGrid((prev) => {
+      const newGrid = prev.map((row) => [...row]); // 깊은 복사
+      newGrid[row][col] = e.target.value;
+      return newGrid;
+    });
 
     setGrid((prev) => {
       const newGrid = [...prev];
@@ -47,23 +55,36 @@ export default function InputBlock({
       }
     }
   };
-  useEffect(() => {
-    console.log("inputRefs.current inside useEffect", inputRefs.current);
-  }, []);
-  console.log("inputRefs.current", inputRefs.current);
-  console.log(" inputBlock: inputRefs", inputRefs);
+  const handleKeyDown = (
+    e: React.KeyboardEvent<HTMLInputElement>,
+    row: number,
+    col: number
+  ) => {
+    if (e.key === "Backspace") {
+      let prevCol = col - 1;
+      let prevRow = row;
+
+      if (prevRow >= maxCol) {
+        prevCol = 0;
+        prevRow -= 1;
+      }
+
+      if (prevRow < maxRow) {
+        inputRefs.current?.[prevRow]?.[prevCol]?.focus();
+      }
+    }
+  };
 
   return (
     <div className="w-[50px] h-[50px] border border-solid flex justify-center items-center">
       <input
         ref={(el) => {
-          if (!inputRefs.current) return;
-          if (!inputRefs.current[rowIndex]) return;
           inputRefs.current[rowIndex][colIndex] = el;
         }}
         className="text-center w-full h-full"
         maxLength={1}
         onChange={(e) => handleChange(e, rowIndex, colIndex)}
+        onKeyDown={(e) => handleKeyDown(e, rowIndex, colIndex)}
       />
     </div>
   );

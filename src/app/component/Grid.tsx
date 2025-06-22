@@ -17,7 +17,6 @@ export default function Grid() {
   const inputRefs = useRef<Array<Array<HTMLInputElement | null>>>(
     charGrid.map(() => Array(maxCol).fill(null))
   );
-  console.log(" grid: inputRefs", inputRefs);
   const [grid, setGrid] = useState<string[][]>(charGrid);
   return (
     <div className="flex flex-col">
