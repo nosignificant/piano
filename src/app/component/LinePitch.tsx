@@ -2,15 +2,12 @@ import { useEffect } from "react";
 
 type LinePitch = {
   charGrid: string[][];
-  maxRow: number;
-  maxCol: number;
   onAsciiGridUpdate: (ascii: number[][]) => void;
 };
 
 export default function LinePitch({
   charGrid,
-  maxRow,
-  maxCol,
+
   onAsciiGridUpdate,
 }: LinePitch) {
   const asciiGrid: number[][] = charGrid.map((row) =>

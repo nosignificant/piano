@@ -46,7 +46,7 @@ export default function Grid() {
       if (typeof ascii !== "number" || isNaN(ascii)) return;
       if (ascii === 32) return;
 
-      const pitchRate = 0.5 + (ascii % 100) / 100;
+      const pitchRate = 0.5 + (ascii % 50);
       console.log(pitchRate);
       loadAndPlayAudioWithPitch("/sound.mp3", pitchRate);
     });
