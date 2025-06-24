@@ -2,7 +2,6 @@ type blockProps = {
   rowIndex: number;
   colIndex: number;
   setGrid: React.Dispatch<React.SetStateAction<string[][]>>;
-  asciiGrid: number[][];
   maxRow: number;
   maxCol: number;
   inputRefs: React.MutableRefObject<Array<Array<HTMLInputElement | null>>>;
@@ -12,7 +11,6 @@ export default function InputBlock({
   rowIndex,
   colIndex,
   setGrid,
-  asciiGrid,
   maxRow,
   maxCol,
   inputRefs,

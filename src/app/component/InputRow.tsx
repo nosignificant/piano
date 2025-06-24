@@ -15,7 +15,6 @@ export default function inputRow({
   rowIndex,
   setGrid,
   charGrid,
-  asciiGrid,
   currentLine,
   maxRow,
   maxCol,
@@ -35,7 +34,6 @@ export default function inputRow({
           rowIndex={rowIndex}
           colIndex={colIndex}
           setGrid={setGrid}
-          asciiGrid={asciiGrid}
           maxRow={maxRow}
           maxCol={maxCol}
           inputRefs={inputRefs}
