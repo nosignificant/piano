@@ -1,6 +1,7 @@
 // utils/playLine.ts
 
 export function playLine(line: number[], audioCtx: AudioContext) {
+  console.log(line);
   line.forEach((ascii) => {
     if (typeof ascii !== "number" || isNaN(ascii)) return;
     if (ascii === 32) return;

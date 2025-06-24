@@ -12,8 +12,8 @@ const audioCtx = createAudioContext();
 export default function Grid() {
   //array를 new Array이렇게 선언하는 게 아니고 값을 받아와서, 그걸 map으로 펼쳐놓는 방식
   // 여기서 grid가 private, setGrid가 public으로 접근하는 개념이라고 생각해도 될라나
-  const maxCol = 5;
-  const maxRow = 10;
+  const maxCol = 10;
+  const maxRow = 5;
 
   const charRow = Array(maxCol).fill("");
   const charGrid = Array(maxRow)

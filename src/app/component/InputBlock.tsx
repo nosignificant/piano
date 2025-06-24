@@ -92,7 +92,7 @@ export default function InputBlock({
   useEffect(() => {
     const block = blockRef.current;
     if (!block) return;
-    if (colIndex === currentLine) {
+    if (rowIndex === currentLine) {
       block.classList.add("bg-black", "text-white");
     } else {
       block.classList.remove("bg-black", "text-white");
