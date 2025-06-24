@@ -4,7 +4,7 @@ import { useState, useRef } from "react";
 import InputRow from "./InputRow";
 import LinePitch from "./LinePitch";
 import Explain from "./Explain";
-import { createAudioContext } from "../util/audioUtils";
+import { createAudioContext, transpose } from "../util/audioUtils";
 import { playLine } from "../util/playLine";
 
 const audioCtx = createAudioContext();
@@ -29,14 +29,16 @@ export default function Grid() {
   const [currentLine, setCurrentLine] = useState(0);
 
   function playAsciiGrid(asciiGrid: number[][]) {
+    const transposed = transpose(asciiGrid); // now it's col-major
+
     let lineIndex = 0;
     const interval = setInterval(() => {
-      if (lineIndex >= asciiGrid.length) {
+      if (lineIndex >= transposed.length) {
         clearInterval(interval);
         return;
       }
 
-      const line = asciiGrid[lineIndex];
+      const line = transposed[lineIndex];
       if (audioCtx !== null) playLine(line, audioCtx);
       setCurrentLine(lineIndex); // 현재 줄 하이라이트용
 

@@ -22,3 +22,9 @@ export async function loadAndPlayAudioWithPitch(
   source.connect(audioCtx.destination);
   source.start();
 }
+
+export function transpose(grid: number[][]): number[][] {
+  console.log("transposed");
+
+  return grid[0].map((_, colIndex) => grid.map((row) => row[colIndex]));
+}
