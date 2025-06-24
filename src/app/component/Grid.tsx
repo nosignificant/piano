@@ -4,11 +4,15 @@ import { useState, useRef, useEffect } from "react";
 import InputRow from "./InputRow";
 import LinePitch from "./LinePitch";
 
-let AudioCtx = window.AudioContext;
-if (!AudioCtx && typeof window !== "undefined") {
-  AudioCtx = (window as any).webkitAudioContext;
+function createAudioContext(): AudioContext | null {
+  if (typeof window !== "undefined") {
+    const AudioCtx = window.AudioContext;
+    return new AudioCtx();
+  }
+  return null;
 }
-const audioCtx = new AudioCtx();
+
+const audioCtx = createAudioContext();
 
 export default function Grid() {
   //array를 new Array이렇게 선언하는 게 아니고 값을 받아와서, 그걸 map으로 펼쳐놓는 방식
