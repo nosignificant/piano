@@ -11,7 +11,14 @@ export default function LinePitch({
   onAsciiGridUpdate,
 }: LinePitch) {
   const asciiGrid: number[][] = charGrid.map((row) =>
+<<<<<<< Updated upstream
     row.map((char) => char.charCodeAt(0))
+=======
+    row.map((char) => {
+      if (char) char.charCodeAt(0);
+      return 0;
+    })
+>>>>>>> Stashed changes
   );
 
   // 상위 컴포넌트에 전달

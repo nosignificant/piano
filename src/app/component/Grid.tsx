@@ -31,7 +31,7 @@ export default function Grid() {
   function playAsciiGrid(asciiGrid: number[][]) {
     let lineIndex = 0;
     const interval = setInterval(() => {
-      if (lineIndex >= asciiGrid.length) {
+      if (lineIndex >= maxCol) {
         clearInterval(interval);
         return;
       }
