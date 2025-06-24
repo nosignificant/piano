@@ -1,3 +1,5 @@
+import { useRef, useEffect } from "react";
+
 type blockProps = {
   rowIndex: number;
   colIndex: number;
@@ -5,6 +7,7 @@ type blockProps = {
   maxRow: number;
   maxCol: number;
   inputRefs: React.MutableRefObject<Array<Array<HTMLInputElement | null>>>;
+  currentLine: number;
 };
 
 export default function InputBlock({
@@ -14,6 +17,7 @@ export default function InputBlock({
   maxRow,
   maxCol,
   inputRefs,
+  currentLine,
 }: blockProps) {
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement>,
@@ -32,12 +36,6 @@ export default function InputBlock({
       return newGrid;
     });
 
-    setGrid((prev) => {
-      const newGrid = [...prev];
-      newGrid[row][col] = value;
-      return newGrid;
-    });
-
     // 다음 input으로 포커스 이동
     if (value) {
       let nextCol = col + 1;
@@ -53,26 +51,58 @@ export default function InputBlock({
       }
     }
   };
-
   const handleKeyDown = (
     e: React.KeyboardEvent<HTMLInputElement>,
     row: number,
     col: number
   ) => {
+    const input = e.currentTarget;
+
     if (e.key === "Backspace") {
-      let prevCol = col - 1;
-      let prevRow = row;
-      console.log(prevCol);
-      if (prevCol === -1) {
-        prevCol = maxCol - 1;
-        prevRow -= 1;
+      if (input.value !== "") {
+        // 현재 input 값 지우기
+        input.value = "";
+
+        // 그리고 grid 상태도 업데이트
+        setGrid((prev) => {
+          const newGrid = [...prev];
+          newGrid[row][col] = "";
+          return newGrid;
+        });
+      } else {
+        // 이전 input으로 이동
+        let prevCol = col - 1;
+        let prevRow = row;
+
+        if (prevCol < 0) {
+          prevCol = maxCol - 1;
+          prevRow -= 1;
+        }
+
+        if (prevRow >= 0) {
+          inputRefs.current?.[prevRow]?.[prevCol]?.focus();
+        }
       }
-      inputRefs.current?.[prevRow]?.[prevCol]?.focus();
     }
   };
 
+  const blockRef = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    const block = blockRef.current;
+    if (!block) return;
+    if (rowIndex === currentLine) {
+      block.classList.add("bg-black", "text-white");
+    } else {
+      block.classList.remove("bg-black", "text-white");
+      //block.classList.add("");
+    }
+  }, [currentLine]);
   return (
-    <div className="w-[50px] h-[50px] bg-gray-200 flex justify-center items-center">
+    <div
+      ref={blockRef}
+      className="w-[50px] h-[50px] flex justify-center border-b border-black
+      items-center transition-colors duration-500"
+    >
       <input
         ref={(el) => {
           inputRefs.current[rowIndex][colIndex] = el;

@@ -21,12 +21,9 @@ export default function inputRow({
   inputRefs,
 }: inputRow) {
   const row = charGrid[rowIndex];
+
   return (
-    <div
-      className={`flex ${
-        currentLine === rowIndex ? "bg-blue-300" : "bg-white"
-      }`}
-    >
+    <div className="flex flex-row">
       {" "}
       {row.map((col, colIndex) => (
         <InputBlock
@@ -37,6 +34,7 @@ export default function inputRow({
           maxRow={maxRow}
           maxCol={maxCol}
           inputRefs={inputRefs}
+          currentLine={currentLine}
         ></InputBlock>
       ))}
     </div>

@@ -59,8 +59,6 @@ export default function Grid() {
     });
   }
 
-  // 전역 또는 useEffect 밖
-
   async function loadAndPlayAudioWithPitch(url: string, pitchRate: number) {
     if (audioCtx !== null) {
       const response = await fetch(url);
@@ -70,7 +68,6 @@ export default function Grid() {
       const source = audioCtx.createBufferSource();
       source.buffer = audioBuffer;
 
-      // ✅ pitch를 바꾸고 싶다면 playbackRate 변경 (1.0 = 원래속도)
       source.playbackRate.value = pitchRate;
 
       source.connect(audioCtx.destination);
@@ -80,6 +77,7 @@ export default function Grid() {
   useEffect(() => {
     console.log("🟢 currentLine 상태가 바뀜:", currentLine);
   }, [currentLine]);
+
   return (
     <div className="flex flex-col">
       {grid.map((row, rowIndex) => (
