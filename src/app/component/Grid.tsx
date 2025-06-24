@@ -59,8 +59,7 @@ export default function Grid() {
   }
 
   return (
-    <div className="flex flex-row justify-between">
-      <Explain />
+    <div className="flex flex-row justify-between mt-6">
       <div className="flex flex-col">
         {grid.map((row, rowIndex) => (
           <InputRow
@@ -76,22 +75,27 @@ export default function Grid() {
           ></InputRow>
         ))}
         <LinePitch charGrid={grid} onAsciiGridUpdate={setAsciiGrid} />
-        <div className="consolas">
-          <button
-            onClick={() => {
-              playAsciiGrid(asciiGrid);
-            }}
-          >
-            play
-          </button>
+        <div className="flex flex-row justify-between">
+          <div className="Bodoni w-[30px] h-[20px]">
+            <button
+              className="bg-black text-white"
+              onClick={() => {
+                playAsciiGrid(asciiGrid);
+              }}
+            >
+              play
+            </button>
 
-          <button
-            onClick={() => {
-              clearGrid();
-            }}
-          >
-            clear
-          </button>
+            <button
+              className="bg-black text-white"
+              onClick={() => {
+                clearGrid();
+              }}
+            >
+              clear
+            </button>
+          </div>
+          <Explain />
         </div>
       </div>
     </div>

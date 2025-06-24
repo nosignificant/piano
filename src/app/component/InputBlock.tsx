@@ -102,7 +102,7 @@ export default function InputBlock({
   return (
     <div
       ref={blockRef}
-      className="w-[50px] h-[50px] flex justify-center border-b border-black
+      className="w-[100px] h-[100px] flex justify-center border-b border-black
       items-center transition-colors duration-500 wingding"
     >
       <input

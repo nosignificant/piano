@@ -31,13 +31,25 @@ body {
 }
 
 @font-face {
+  font-family: "Bodoni";
+  src: url(/font/Bodoni.ttf) format("truetype");
+}
+
+@font-face {
   font-family: "consolas";
   src: url(/font/consola.ttf) format("truetype");
 }
 .wingding {
   font-family: wingding;
+  font-size: 20rem;
+}
+
+.Bodoni {
+  font-family: Bodoni;
+  font-size: 5rem;
 }
 
 .consolas {
   font-family: consolas;
+  font-size: 1.2rem;
 }

@@ -6,18 +6,23 @@ export default function Explain() {
   }
   return (
     <div className="consolas">
-      <div onClick={openThis}>
-        {" "}
-        {!isOpen ? " what is this site? " : "close"}
+      <div className="Bodoni" onClick={openThis}>
+        what is this site?
+        {isOpen && (
+          <div className="w-[500px] consolas ">
+            This was inspired by{" "}
+            <a
+              className="border-b border-solid"
+              href="https://100r.co/site/orca.html"
+            >
+              ORCΛ
+            </a>
+            , a two-dimensional esoteric programming language. I wondered what
+            if letter converted into sound and make music. write down letters
+            above.
+          </div>
+        )}
       </div>
-      {isOpen && (
-        <div className="w-[500px]">
-          This was inspired by
-          <a href="https://100r.co/site/orca.html"> ORCΛ</a>, a two-dimensional
-          esoteric programming language. I wondered what if letter converted
-          into sound and make music.
-        </div>
-      )}
     </div>
   );
 }
