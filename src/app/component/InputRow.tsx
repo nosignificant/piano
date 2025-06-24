@@ -3,7 +3,7 @@ import InputBlock from "./InputBlock";
 type inputRow = {
   rowIndex: number;
   setGrid: React.Dispatch<React.SetStateAction<string[][]>>;
-  charGrid: string[][];
+  grid: string[][];
   asciiGrid: number[][];
   currentLine: number;
   maxRow: number;
@@ -14,23 +14,22 @@ type inputRow = {
 export default function inputRow({
   rowIndex,
   setGrid,
-  charGrid,
+  grid,
   currentLine,
   maxRow,
   maxCol,
   inputRefs,
 }: inputRow) {
-  const row = charGrid[rowIndex];
-
   return (
     <div className="flex flex-row">
       {" "}
-      {row.map((col, colIndex) => (
+      {grid[rowIndex].map((col, colIndex) => (
         <InputBlock
           key={`${rowIndex}-${colIndex}`}
           rowIndex={rowIndex}
           colIndex={colIndex}
           setGrid={setGrid}
+          grid={grid}
           maxRow={maxRow}
           maxCol={maxCol}
           inputRefs={inputRefs}

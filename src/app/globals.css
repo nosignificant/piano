@@ -24,3 +24,12 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+@font-face {
+  font-family: "wingding";
+  src: url(/font/Wingdings.ttf) format("truetype");
+}
+
+.wingding {
+  font-family: wingding;
+}

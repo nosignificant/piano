@@ -4,6 +4,7 @@ type blockProps = {
   rowIndex: number;
   colIndex: number;
   setGrid: React.Dispatch<React.SetStateAction<string[][]>>;
+  grid: string[][];
   maxRow: number;
   maxCol: number;
   inputRefs: React.MutableRefObject<Array<Array<HTMLInputElement | null>>>;
@@ -14,6 +15,7 @@ export default function InputBlock({
   rowIndex,
   colIndex,
   setGrid,
+  grid,
   maxRow,
   maxCol,
   inputRefs,
@@ -101,12 +103,13 @@ export default function InputBlock({
     <div
       ref={blockRef}
       className="w-[50px] h-[50px] flex justify-center border-b border-black
-      items-center transition-colors duration-500"
+      items-center transition-colors duration-500 wingding"
     >
       <input
         ref={(el) => {
           inputRefs.current[rowIndex][colIndex] = el;
         }}
+        value={grid[rowIndex][colIndex] ?? "f"}
         className="text-center w-full h-full"
         maxLength={1}
         onChange={(e) => handleChange(e, rowIndex, colIndex)}

@@ -1,16 +1,10 @@
 "use client";
 
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef } from "react";
 import InputRow from "./InputRow";
 import LinePitch from "./LinePitch";
-
-function createAudioContext(): AudioContext | null {
-  if (typeof window !== "undefined") {
-    const AudioCtx = window.AudioContext;
-    return new AudioCtx();
-  }
-  return null;
-}
+import Explain from "./Explain";
+import { createAudioContext } from "../util/audioUtils";
 
 const audioCtx = createAudioContext();
 
@@ -48,59 +42,53 @@ export default function Grid() {
       lineIndex++;
     }, 500); // 0.5초 간격
   }
-  function playLine(line: number[]) {
-    line.forEach((ascii) => {
-      if (typeof ascii !== "number" || isNaN(ascii)) return;
-      if (ascii === 32) return;
 
-      const pitchRate = 0.5 + (ascii % 50);
-      console.log(pitchRate);
-      loadAndPlayAudioWithPitch("/sound.mp3", pitchRate);
-    });
+  function clearGrid() {
+    const row = Array(maxCol).fill("");
+    const clearGrid = Array(maxRow)
+      .fill("")
+      .map(() => [...row]);
+    setGrid(clearGrid);
+
+    inputRefs.current = Array.from({ length: maxRow }, () =>
+      Array(maxCol).fill(null)
+    );
   }
-
-  async function loadAndPlayAudioWithPitch(url: string, pitchRate: number) {
-    if (audioCtx !== null) {
-      const response = await fetch(url);
-      const arrayBuffer = await response.arrayBuffer();
-      const audioBuffer = await audioCtx.decodeAudioData(arrayBuffer);
-
-      const source = audioCtx.createBufferSource();
-      source.buffer = audioBuffer;
-
-      source.playbackRate.value = pitchRate;
-
-      source.connect(audioCtx.destination);
-      source.start();
-    }
-  }
-  useEffect(() => {
-    console.log("🟢 currentLine 상태가 바뀜:", currentLine);
-  }, [currentLine]);
 
   return (
-    <div className="flex flex-col">
-      {grid.map((row, rowIndex) => (
-        <InputRow
-          key={rowIndex}
-          rowIndex={rowIndex}
-          setGrid={setGrid}
-          charGrid={grid}
-          asciiGrid={asciiGrid}
-          currentLine={currentLine}
-          maxRow={maxRow}
-          maxCol={maxCol}
-          inputRefs={inputRefs}
-        ></InputRow>
-      ))}
-      <LinePitch charGrid={grid} onAsciiGridUpdate={setAsciiGrid} />
-      <button
-        onClick={() => {
-          playAsciiGrid(asciiGrid);
-        }}
-      >
-        play
-      </button>
+    <div className="flex flex-row">
+      <Explain />
+      <div className="flex flex-col">
+        {grid.map((row, rowIndex) => (
+          <InputRow
+            key={rowIndex}
+            rowIndex={rowIndex}
+            setGrid={setGrid}
+            grid={grid}
+            asciiGrid={asciiGrid}
+            currentLine={currentLine}
+            maxRow={maxRow}
+            maxCol={maxCol}
+            inputRefs={inputRefs}
+          ></InputRow>
+        ))}
+        <LinePitch charGrid={grid} onAsciiGridUpdate={setAsciiGrid} />
+        <button
+          onClick={() => {
+            playAsciiGrid(asciiGrid);
+          }}
+        >
+          play
+        </button>
+
+        <button
+          onClick={() => {
+            clearGrid();
+          }}
+        >
+          clear
+        </button>
+      </div>
     </div>
   );
 }
