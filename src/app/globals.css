@@ -30,6 +30,14 @@ body {
   src: url(/font/Wingdings.ttf) format("truetype");
 }
 
+@font-face {
+  font-family: "consolas";
+  src: url(/font/consola.ttf) format("truetype");
+}
 .wingding {
   font-family: wingding;
+}
+
+.consolas {
+  font-family: consolas;
 }

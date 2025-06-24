@@ -5,6 +5,7 @@ import InputRow from "./InputRow";
 import LinePitch from "./LinePitch";
 import Explain from "./Explain";
 import { createAudioContext } from "../util/audioUtils";
+import { playLine } from "../util/playLine";
 
 const audioCtx = createAudioContext();
 
@@ -36,7 +37,7 @@ export default function Grid() {
       }
 
       const line = asciiGrid[lineIndex];
-      playLine(line);
+      if (audioCtx !== null) playLine(line, audioCtx);
       setCurrentLine(lineIndex); // 현재 줄 하이라이트용
 
       lineIndex++;
@@ -56,7 +57,7 @@ export default function Grid() {
   }
 
   return (
-    <div className="flex flex-row">
+    <div className="flex flex-row justify-between">
       <Explain />
       <div className="flex flex-col">
         {grid.map((row, rowIndex) => (
@@ -73,21 +74,23 @@ export default function Grid() {
           ></InputRow>
         ))}
         <LinePitch charGrid={grid} onAsciiGridUpdate={setAsciiGrid} />
-        <button
-          onClick={() => {
-            playAsciiGrid(asciiGrid);
-          }}
-        >
-          play
-        </button>
+        <div className="consolas">
+          <button
+            onClick={() => {
+              playAsciiGrid(asciiGrid);
+            }}
+          >
+            play
+          </button>
 
-        <button
-          onClick={() => {
-            clearGrid();
-          }}
-        >
-          clear
-        </button>
+          <button
+            onClick={() => {
+              clearGrid();
+            }}
+          >
+            clear
+          </button>
+        </div>
       </div>
     </div>
   );

@@ -5,16 +5,17 @@ export default function Explain() {
     setOpen((prev) => !prev);
   }
   return (
-    <div>
+    <div className="consolas">
       <div onClick={openThis}>
         {" "}
         {!isOpen ? " what is this site? " : "close"}
       </div>
       {isOpen && (
         <div className="w-[500px]">
-          This was inspired by [ORCΛ](https://100r.co/site/orca.html), Orca is a
-          two-dimensional esoteric programming language. I wondered what if
-          letter converted into sound and make music.
+          This was inspired by
+          <a href="https://100r.co/site/orca.html"> ORCΛ</a>, a two-dimensional
+          esoteric programming language. I wondered what if letter converted
+          into sound and make music.
         </div>
       )}
     </div>
